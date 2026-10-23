@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
 /* Layout: a dark binder-page night sky. Hero text beside a phone, then a live search, then
    features as a binder spread (3 × 2 pockets), the numbers, and the fine print. Foil only
@@ -33,7 +33,6 @@
   --display: "Fraunces", "Iowan Old Style", Georgia, serif;
   --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --book: "Crimson Pro", "Iowan Old Style", Georgia, serif;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: light) {
@@ -96,59 +95,16 @@ p { margin: 0; }
   .shots { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; }
 }
 
-
-/* Cards: generic Magic-style frames (no symbols, logos or card back). Each frame sets its own
-   colors; the foil layer follows the pointer (--mx, --my) like light on a foil. */
-.mtg { --frame-a: #C9A45C; --frame-b: #8E6A2E; --bar: #F1E2B8; --box: #EFE4C8; --line: #3A2E18; --sky-a: #2A2454; --sky-b: #6A4FB0; --sky-c: #D98FB8; --hill: #1A1630; --moon: #F6D08A; --gem: #E8915C;
-  position: relative; aspect-ratio: 63 / 88; border-radius: 4.6% / 3.3%; padding: 3.6%; background: #100E14; color: var(--line);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06); transform-style: preserve-3d; transition: transform 0.2s ease-out, box-shadow 0.2s; container-type: inline-size; }
-.mtg .frame { height: 100%; border-radius: 3.2% / 2.3%; padding: 3.4% 4%; background: linear-gradient(150deg, var(--frame-a), var(--frame-b)); display: grid; grid-template-rows: auto 1fr auto auto auto; gap: 2.4cqw; overflow: hidden; }
-.mtg .bar { display: flex; align-items: center; justify-content: space-between; gap: 2cqw; padding: 1.6cqw 3.2cqw; border-radius: 99px; background: linear-gradient(var(--bar), color-mix(in srgb, var(--bar) 82%, #000)); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(0, 0, 0, 0.25); min-width: 0; }
-.mtg .name { font: 700 5.6cqw/1.15 var(--display); color: var(--line); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0; }
-.mtg .cost { display: flex; gap: 1.2cqw; flex: none; }
-.mtg .cost i { width: 4.6cqw; height: 4.6cqw; border-radius: 50%; background: var(--c, #CFCAD8); box-shadow: inset 0 -0.5cqw 0 rgba(0, 0, 0, 0.25), 0 0 0 0.35cqw rgba(0, 0, 0, 0.35); }
-.mtg .art { position: relative; margin-inline: 1.4cqw; border: 0.7cqw solid rgba(0, 0, 0, 0.55); background: linear-gradient(var(--sky-a), var(--sky-b) 62%, var(--sky-c)); overflow: hidden; min-height: 0; }
-.mtg .art svg.land { position: absolute; inset: auto 0 0; width: 100%; height: 62%; }
-.mtg .art .moon { position: absolute; right: 16%; top: 14%; width: 15%; aspect-ratio: 1; border-radius: 50%; background: var(--moon); box-shadow: 0 0 6cqw var(--moon); }
-.mtg .art svg.glyph { position: absolute; left: 50%; top: 50%; width: 22%; transform: translate(-50%, -58%); color: #fff; filter: drop-shadow(0 1cqw 2cqw rgba(0, 0, 0, 0.5)); }
-.mtg .type { font: 600 4.2cqw/1.15 var(--display); }
-.mtg .gem { width: 3.8cqw; height: 3.8cqw; transform: rotate(45deg); background: linear-gradient(135deg, #FFE3A8, var(--gem)); box-shadow: 0 0 0 0.35cqw rgba(0, 0, 0, 0.4); flex: none; }
-.mtg .text { margin-inline: 1.4cqw; padding: 3cqw 3.6cqw; border-radius: 1cqw; background: var(--box); box-shadow: inset 0 0 0 0.5cqw rgba(0, 0, 0, 0.18); display: grid; gap: 2cqw; align-content: start; font: 400 4.5cqw/1.3 var(--book); color: #1A1610; }
-.mtg .text p { margin: 0; }
-.mtg .text.lines { gap: 3.2cqw; padding-block: 5cqw; }
-.mtg .text.lines i { height: 3.4cqw; border-radius: 2cqw; background: rgba(0, 0, 0, 0.16); }
-.mtg .text.lines i:nth-child(2) { width: 82%; }
-.mtg .text.lines i:nth-child(3) { width: 64%; }
-.mtg .text .flavor { font-style: italic; border-top: 0.3cqw solid rgba(0, 0, 0, 0.18); padding-top: 1.8cqw; color: #3B342A; }
-.mtg .foot { display: flex; justify-content: space-between; font: 500 2.9cqw/1 var(--mono); color: rgba(255, 255, 255, 0.82); padding-inline: 1.4cqw; letter-spacing: 0.04em; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6); }
-.mtg .shine { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: overlay; opacity: 0; transition: opacity 0.25s;
-  background: radial-gradient(circle at var(--mx, 30%) var(--my, 20%), rgba(255, 255, 255, 0.55), transparent 42%),
-              linear-gradient(115deg, transparent 20%, rgba(185, 174, 255, 0.55) 36%, rgba(127, 231, 236, 0.5) 46%, rgba(247, 168, 212, 0.5) 56%, rgba(246, 208, 138, 0.5) 66%, transparent 80%);
-  background-size: 100% 100%, 260% 260%; background-position: center, var(--gx, 30%) var(--gy, 30%); }
-.mtg.foil .shine { opacity: 0.32; }
-.mtg:hover .shine { opacity: 0.5; }
-.mtg.gold { }
-.mtg.blue { --frame-a: #4A7DB4; --frame-b: #1F4570; --bar: #D3E3F2; --box: #E6EEF6; --line: #10243A; --sky-a: #0F2A4A; --sky-b: #3E77B5; --sky-c: #9BC6E6; --hill: #0B1C30; --moon: #EAF4FF; --gem: #8FB8FF; }
-.mtg.green { --frame-a: #4C8A5A; --frame-b: #24503A; --bar: #D6E8D2; --box: #E8F1E3; --line: #13301E; --sky-a: #1C3A2A; --sky-b: #5E9A62; --sky-c: #D8C98A; --hill: #12281B; --moon: #FFF1B8; --gem: #F0D27A; }
-.mtg.red { --frame-a: #B85A44; --frame-b: #7A2A22; --bar: #F3D9CE; --box: #F7E8E0; --line: #3A140E; --sky-a: #3A1418; --sky-b: #B4573A; --sky-c: #F2B36B; --hill: #241012; --moon: #FFE0A0; --gem: #FF9A6A; }
-.mtg.artifact { --frame-a: #9A96A4; --frame-b: #5E5A68; --bar: #E6E4EA; --box: #F0EFF3; --line: #22202A; --sky-a: #23212E; --sky-b: #6C6884; --sky-c: #C9C3D8; --hill: #16141E; --moon: #F6D08A; --gem: #C9C3D8; }
-.mtg.white { --frame-a: #DCD5C2; --frame-b: #A39C88; --bar: #F7F3E8; --box: #FCF9F1; --line: #2E2A20; --sky-a: #6C7E9E; --sky-b: #C8C6D4; --sky-c: #FFF3D6; --hill: #4A5068; --moon: #FFFFFF; --gem: #F6D08A; }
-.mtg.land { --frame-a: #8A7458; --frame-b: #4E3F30; --bar: #EBDFCB; --box: #F2EADC; --line: #2C2216; --sky-a: #1E1830; --sky-b: #5A4A7A; --sky-c: #C99A6A; --hill: #1A1420; --moon: #F6D08A; --gem: #F6D08A; }
-
-/* Features as a binder page of sleeved cards. */
-.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; padding: 22px; border-radius: 26px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
-.cards .mtg { width: 100%; }
-
-/* The hero: a hand of cards fanned out behind the phone. */
-.hero-visual { position: relative; justify-self: center; width: min(460px, 100%); display: grid; place-items: center; padding-block: 20px; }
+/* The hero: real cards fanned out behind the phone (whole, unaltered card images). */
+.hero-visual { position: relative; justify-self: center; width: min(470px, 100%); display: grid; place-items: center; padding-block: 24px; }
 .hero-visual .device { position: relative; z-index: 2; }
-.fan { position: absolute; inset: 0; pointer-events: none; }
-/* The fanned cards may reach past the screen's edge on phones; never scroll sideways. */
+.hand { position: absolute; inset: 0; pointer-events: none; }
+.hand img { position: absolute; width: 44%; height: auto; border-radius: 4.75% / 3.4%; box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55); }
+.hand img:nth-child(1) { left: -8%; top: 20%; transform: rotate(-14deg); }
+.hand img:nth-child(2) { right: -8%; top: 12%; transform: rotate(12deg); }
+.hand img:nth-child(3) { right: 0; top: 56%; transform: rotate(5deg); z-index: 3; width: 38%; }
+/* The cards may reach past a phone screen's edge; never scroll sideways. */
 main { overflow-x: clip; }
-.fan .mtg { position: absolute; width: 46%; top: 22%; }
-.fan .mtg:nth-child(1) { left: -6%; transform: rotate(-15deg); }
-.fan .mtg:nth-child(2) { right: -6%; transform: rotate(13deg); top: 16%; }
-.fan .mtg:nth-child(3) { right: 2%; transform: rotate(4deg); top: 54%; z-index: 3; width: 40%; }
 
 /* Sections */
 section { padding-block: 64px; border-top: 1px solid var(--hairline); }
@@ -170,7 +126,7 @@ section { padding-block: 64px; border-top: 1px solid var(--hairline); }
 .how { margin-top: 18px; color: var(--muted); font-size: 14px; min-height: 1.6em; }
 .results { display: grid; gap: 10px; }
 .result { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 16px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
-.result .mini { width: 46px; aspect-ratio: 63 / 88; border-radius: 5px; }
+.result .mini { width: 46px; height: auto; aspect-ratio: 146 / 204; border-radius: 2.5px; display: block; }
 .result .name { font-weight: 700; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
 .result .meta { color: var(--muted); font-size: 13px; }
 .result .meta code { font: 500 12px/1 var(--mono); color: var(--ink); }
@@ -180,6 +136,16 @@ section { padding-block: 64px; border-top: 1px solid var(--hairline); }
 .rarity { font: 700 11px/1 var(--body); letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 8px; border-radius: 6px; background: var(--raised); color: var(--muted); }
 .rarity.mythic { color: var(--mythic); } .rarity.rare { color: var(--gold); }
 .empty { padding: 18px; border-radius: 16px; border: 1px dashed var(--hairline); color: var(--muted); }
+
+/* Binder spread */
+.binder { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 14px; border-radius: 24px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
+.pocket { position: relative; padding: 22px 20px 20px; border-radius: 14px; background: var(--ground); box-shadow: inset 0 0 0 1px var(--hairline); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.pocket::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; border-radius: 14px 14px 0 0; background: var(--hairline); }
+.pocket.foil::before { background: var(--foil); }
+.pocket .glyph { width: 34px; height: 34px; color: var(--accent); }
+.pocket h3 { font-size: 21px; line-height: 1.2; }
+.pocket p { color: var(--muted); font-size: 15px; }
+.pocket .tag { font: 500 12px/1.4 var(--mono); color: var(--ink); opacity: 0.8; }
 
 /* Numbers */
 .numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
@@ -196,14 +162,12 @@ footer p { max-width: 70em; }
 @media (max-width: 860px) {
   .hero, .demo { grid-template-columns: minmax(0, 1fr); }
   .hero { padding-block: 16px 56px; gap: 40px; }
-  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .binder { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
   body { padding-inline: 16px; }
   .top nav { display: none; }
-  .numbers { grid-template-columns: minmax(0, 1fr); }
-  .cards { grid-template-columns: minmax(0, 1fr); padding: 14px; }
-  .fan .mtg:nth-child(3) { display: none; }
+  .binder, .numbers { grid-template-columns: minmax(0, 1fr); }
   section { padding-block: 48px; }
 }
 
@@ -211,12 +175,6 @@ footer p { max-width: 70em; }
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="land" viewBox="0 0 100 60" preserveAspectRatio="none">
-    <path d="M0 60V26L16 10l12 14 18-20 20 24 12-10 22 18v24z" fill="var(--hill)" opacity="0.55"/>
-    <path d="M0 60V40l20-16 14 12 22-18 18 20 26-12v34z" fill="var(--hill)"/>
-  </symbol>
-</svg>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#top" aria-label="FoilFold">
@@ -244,37 +202,10 @@ footer p { max-width: 70em; }
       </div>
 
       <div class="hero-visual">
-        <div class="fan" aria-hidden="true">
-          <div class="mtg red">
-            <div class="frame">
-              <div class="bar"><span class="name">Ember Vault</span><span class="cost"><i style="--c:#CFCAD8"></i><i style="--c:#EFA88B"></i></span></div>
-              <div class="art"><span class="moon"></span><svg class="land"><use href="#land"/></svg></div>
-              <div class="bar"><span class="type">Artifact</span><i class="gem"></i></div>
-              <div class="text lines"><i></i><i></i><i></i></div>
-              <div class="foot"><span>FF · 007/006</span><span>EN</span></div>
-            </div>
-            <div class="shine"></div>
-          </div>
-          <div class="mtg blue">
-            <div class="frame">
-              <div class="bar"><span class="name">Tidal Ledger</span><span class="cost"><i style="--c:#A8D2EE"></i><i style="--c:#A8D2EE"></i></span></div>
-              <div class="art"><span class="moon"></span><svg class="land"><use href="#land"/></svg></div>
-              <div class="bar"><span class="type">Instant</span><i class="gem"></i></div>
-              <div class="text lines"><i></i><i></i><i></i></div>
-              <div class="foot"><span>FF · 012/006</span><span>EN</span></div>
-            </div>
-            <div class="shine"></div>
-          </div>
-          <div class="mtg gold foil">
-            <div class="frame">
-              <div class="bar"><span class="name">Gilded Archive</span><span class="cost"><i style="--c:#F6D08A"></i><i style="--c:#B9AEFF"></i></span></div>
-              <div class="art"><span class="moon"></span><svg class="land"><use href="#land"/></svg></div>
-              <div class="bar"><span class="type">Legendary Artifact</span><i class="gem"></i></div>
-              <div class="text lines"><i></i><i></i><i></i></div>
-              <div class="foot"><span>FF · 001/006</span><span>EN</span></div>
-            </div>
-            <div class="shine"></div>
-          </div>
+        <div class="hand" aria-hidden="true">
+          <img src="assets/cards/lightning-bolt.jpg" width="488" height="680" alt="">
+          <img src="assets/cards/counterspell.jpg" width="488" height="680" alt="">
+          <img src="assets/cards/shivan-dragon.jpg" width="488" height="680" alt="">
         </div>
         <div class="device">
           <img src="assets/screens/collection.jpg" width="660" height="1434" alt="FoilFold on iPhone: the collection with its card count and estimated value, recently added cards such as Atraxa, Grand Unifier and Counterspell, and their prices.">
@@ -342,66 +273,42 @@ footer p { max-width: 70em; }
         <p class="label">What it does</p>
         <h2 id="features-title">Built the way collectors sort their binders</h2>
       </div>
-      <div class="cards">
-        <article class="mtg gold foil" aria-labelledby="card-001">
-          <div class="frame">
-            <div class="bar"><h3 class="name" id="card-001">The Exact Printing</h3><span class="cost" aria-hidden="true"><i style="--c:#CFCAD8"></i><i style="--c:#F6D08A"></i><i style="--c:#B9AEFF"></i></span></div>
-            <div class="art" aria-hidden="true"><span class="moon"></span><svg class="land"><use href="#land"/></svg><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 7h6M9 17h3"/></svg></div>
-            <div class="bar"><span class="type">Legendary Enchantment — Printing</span><i class="gem" aria-hidden="true"></i></div>
-            <div class="text"><p>Every set, showcase and borderless frame, and every promo. Record the finish, condition and language of each copy.</p><p class="flavor">“Every Swamp has a story. FoilFold knows all 841.”</p></div>
-            <div class="foot" aria-hidden="true"><span>FF · 001/006 · M</span><span>EN</span></div>
-          </div>
-          <div class="shine" aria-hidden="true"></div>
+      <div class="binder">
+        <article class="pocket foil">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 7h6M9 17h3"/></svg>
+          <h3>The right version, not just the card</h3>
+          <p>Every set, showcase and borderless frame, and every promo. Record the finish, condition and language of each copy.</p>
+          <span class="tag">Swamp · 841 printings</span>
         </article>
-        <article class="mtg artifact" aria-labelledby="card-002">
-          <div class="frame">
-            <div class="bar"><h3 class="name" id="card-002">Binder Page</h3><span class="cost" aria-hidden="true"><i style="--c:#CFCAD8"></i><i style="--c:#CFCAD8"></i></span></div>
-            <div class="art" aria-hidden="true"><span class="moon"></span><svg class="land"><use href="#land"/></svg><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M3 12h18"/></svg></div>
-            <div class="bar"><span class="type">Artifact — Binder</span><i class="gem" aria-hidden="true"></i></div>
-            <div class="text"><p>Pick a set and go through it page by page in binder order. Tap the pockets you own; each shows how many copies you already have.</p><p class="flavor">“Nine pockets at a time, until the set is complete.”</p></div>
-            <div class="foot" aria-hidden="true"><span>FF · 002/006 · R</span><span>EN</span></div>
-          </div>
-          <div class="shine" aria-hidden="true"></div>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M3 12h18"/></svg>
+          <h3>A binder page at a time</h3>
+          <p>Pick a set and go through it page by page in binder order. Tap the pockets you own; each shows how many copies you already have.</p>
+          <span class="tag">Bloomburrow · page 1 of 31</span>
         </article>
-        <article class="mtg green" aria-labelledby="card-003">
-          <div class="frame">
-            <div class="bar"><h3 class="name" id="card-003">Appraisal</h3><span class="cost" aria-hidden="true"><i style="--c:#CFCAD8"></i><i style="--c:#9FCDA9"></i></span></div>
-            <div class="art" aria-hidden="true"><span class="moon"></span><svg class="land"><use href="#land"/></svg><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19l5-6 4 3 7-9"/><path d="M15 7h5v5"/></svg></div>
-            <div class="bar"><span class="type">Sorcery — Value</span><i class="gem" aria-hidden="true"></i></div>
-            <div class="text"><p>Estimate the value of every copy and of the whole collection, from Cardmarket and TCGplayer prices via Scryfall.</p><p class="flavor">“The rarest thing in a binder is knowing what it’s worth.”</p></div>
-            <div class="foot" aria-hidden="true"><span>FF · 003/006 · U</span><span>EN</span></div>
-          </div>
-          <div class="shine" aria-hidden="true"></div>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19l5-6 4 3 7-9"/><path d="M15 7h5v5"/></svg>
+          <h3>Know what it's worth</h3>
+          <p>An estimated value for every copy and for the whole collection, from Cardmarket and TCGplayer prices via Scryfall. Sort by total value or price per card.</p>
+          <span class="tag">near mint · English · ECB rates</span>
         </article>
-        <article class="mtg blue" aria-labelledby="card-004">
-          <div class="frame">
-            <div class="bar"><h3 class="name" id="card-004">Sort and Filter</h3><span class="cost" aria-hidden="true"><i style="--c:#A8D2EE"></i><i style="--c:#A8D2EE"></i></span></div>
-            <div class="art" aria-hidden="true"><span class="moon"></span><svg class="land"><use href="#land"/></svg><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg></div>
-            <div class="bar"><span class="type">Instant — Order</span><i class="gem" aria-hidden="true"></i></div>
-            <div class="text"><p>Combine color, mana value, type, rarity and set. Sort in up to three levels, with your own cards first or the gaps first.</p><p class="flavor">“Order from chaos, three levels deep.”</p></div>
-            <div class="foot" aria-hidden="true"><span>FF · 004/006 · R</span><span>EN</span></div>
-          </div>
-          <div class="shine" aria-hidden="true"></div>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          <h3>Sort and filter like a collector</h3>
+          <p>Color, mana value, card type, rarity and set, combined however you like. Sort in up to three levels, with your own cards first or the gaps first.</p>
+          <span class="tag">Red · MV 2 · Creature · Mythic</span>
         </article>
-        <article class="mtg land" aria-labelledby="card-005">
-          <div class="frame">
-            <div class="bar"><h3 class="name" id="card-005">Offline Catalog</h3><span class="cost" aria-hidden="true"></span></div>
-            <div class="art" aria-hidden="true"><span class="moon"></span><svg class="land"><use href="#land"/></svg><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 4.2-2.6M12 20h.01"/><path d="M14.8 10.3A10 10 0 0 1 19 12.9"/></svg></div>
-            <div class="bar"><span class="type">Land — Catalog</span><i class="gem" aria-hidden="true"></i></div>
-            <div class="text"><p>The whole catalog lives on your device, so search never waits for the network. New sets arrive in the background.</p><p class="flavor">“The basement has no signal. The catalog doesn’t need any.”</p></div>
-            <div class="foot" aria-hidden="true"><span>FF · 005/006 · C</span><span>EN</span></div>
-          </div>
-          <div class="shine" aria-hidden="true"></div>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 4.2-2.6M12 20h.01"/><path d="M14.8 10.3A10 10 0 0 1 19 12.9"/></svg>
+          <h3>Works offline</h3>
+          <p>The whole catalog lives on your device, so search never waits for the network. New sets arrive in the background.</p>
+          <span class="tag">at a card show, in the basement</span>
         </article>
-        <article class="mtg white" aria-labelledby="card-006">
-          <div class="frame">
-            <div class="bar"><h3 class="name" id="card-006">Your Own iCloud</h3><span class="cost" aria-hidden="true"><i style="--c:#CFCAD8"></i><i style="--c:#F8F3D6"></i></span></div>
-            <div class="art" aria-hidden="true"><span class="moon"></span><svg class="land"><use href="#land"/></svg><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8z"/></svg></div>
-            <div class="bar"><span class="type">Enchantment — Sync</span><i class="gem" aria-hidden="true"></i></div>
-            <div class="text"><p>No account to create. Your collection syncs through your own iCloud between iPhone, iPad and Mac. CSV in and out whenever you like.</p><p class="flavor">“What’s in your binder stays in your binder.”</p></div>
-            <div class="foot" aria-hidden="true"><span>FF · 006/006 · U</span><span>EN</span></div>
-          </div>
-          <div class="shine" aria-hidden="true"></div>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8z"/></svg>
+          <h3>Yours, in your iCloud</h3>
+          <p>No account to create. Your collection syncs through your own iCloud between iPhone, iPad and Mac. Import and export it as CSV whenever you like.</p>
+          <span class="tag">no sign-up · CSV in and out</span>
         </article>
       </div>
     </section>
@@ -423,7 +330,7 @@ footer p { max-width: 70em; }
   <footer>
     <a class="brand" href="#top"><img src="assets/icon-64.png" alt="" width="40" height="40"><span>FoilFold</span></a>
     <p>Card data and images are provided by Scryfall. Prices are estimates from Cardmarket and TCGplayer (via Scryfall), converted at ECB rates.</p>
-    <p>Magic: The Gathering is © Wizards of the Coast. FoilFold is not produced or endorsed by Wizards of the Coast or Scryfall.</p>
+    <p>Magic: The Gathering and its card images are © Wizards of the Coast. FoilFold is not produced or endorsed by Wizards of the Coast or Scryfall. Card images shown: Lightning Bolt by Christopher Moeller, Counterspell by Zack Stella, Shivan Dragon by Donato Giancola; in the search demo, cards by Tatiana Kirgetova, Christopher Moeller, Johann Bodin, Justin Gerard, Chuck Lukacs, Richard Whitters, Mike Bierek, Zack Stella, Jesper Ejsing, Eric Wilkerson, Isis and Josu Solano.</p>
     <p><a href="privacy.html">Privacy Policy</a></p>
   </footer>
 </div>
@@ -433,20 +340,20 @@ footer p { max-width: 70em; }
   // A few real cards from the catalog: name, default set and number, rarity, cost, type,
   // number of printings. Extra entries are other printings that set + number finds.
   const cards = [
-    { name: "Rhystic Study", set: "j22", num: "114", rarity: "rare", cost: "2U", type: "Enchantment", printings: 11, art: "linear-gradient(170deg,#2C3F66,#6B87B8)" },
-    { name: "Lightning Bolt", set: "fdc", num: "163", rarity: "uncommon", cost: "R", type: "Instant", printings: 68, art: "linear-gradient(150deg,#5E2A2A,#B4573A)" },
-    { name: "Lightning Bolt", set: "m11", num: "149", rarity: "common", cost: "R", type: "Instant", printings: 68, art: "linear-gradient(150deg,#5E2A2A,#B4573A)", alt: true },
-    { name: "Ghostfire Slice", set: "mh3", num: "123", rarity: "uncommon", cost: "2R", type: "Instant", printings: 1, art: "linear-gradient(140deg,#4B1F2E,#C2603E)" },
-    { name: "Jace, the Mind Sculptor", set: "blc", num: "75", rarity: "mythic", cost: "2UU", type: "Legendary Planeswalker — Jace", printings: 10, art: "linear-gradient(165deg,#22305E,#5B78C7)" },
-    { name: "Doubling Season", set: "fdn", num: "216", rarity: "mythic", cost: "4G", type: "Enchantment", printings: 17, art: "linear-gradient(160deg,#6B5A2E,#3C5A3A)" },
-    { name: "Sheoldred, the Apocalypse", set: "dmu", num: "435", rarity: "mythic", cost: "2BB", type: "Legendary Creature — Phyrexian Praetor", printings: 9, art: "linear-gradient(160deg,#1E1A26,#5A4A62)" },
-    { name: "Sol Ring", set: "fdc", num: "286", rarity: "uncommon", cost: "1", type: "Artifact", printings: 140, art: "linear-gradient(150deg,#4A4252,#9A8E7A)" },
-    { name: "Counterspell", set: "fdc", num: "61", rarity: "uncommon", cost: "UU", type: "Instant", printings: 79, art: "linear-gradient(160deg,#1E3050,#4E79A8)" },
-    { name: "Demonic Tutor", set: "cmm", num: "150", rarity: "mythic", cost: "1B", type: "Sorcery", printings: 24, art: "linear-gradient(160deg,#2A1420,#6E3048)" },
-    { name: "Swords to Plowshares", set: "fdc", num: "53", rarity: "uncommon", cost: "W", type: "Instant", printings: 93, art: "linear-gradient(160deg,#6E6A52,#C9C08E)" },
-    { name: "Llanowar Elves", set: "fdc", num: "213", rarity: "common", cost: "G", type: "Creature — Elf Druid", printings: 64, art: "linear-gradient(160deg,#1F3A24,#5E8C4E)" },
-    { name: "Cyclonic Rift", set: "rvr", num: "40", rarity: "mythic", cost: "1U", type: "Instant", printings: 15, art: "linear-gradient(160deg,#1A2B4A,#4A6FA8)" },
-    { name: "Swamp", set: "fra", num: "285", rarity: "common", cost: "", type: "Basic Land — Swamp", printings: 841, art: "linear-gradient(160deg,#1C1828,#4B4058)" },
+    { name: "Rhystic Study", set: "j22", num: "114", rarity: "rare", cost: "2U", type: "Enchantment", printings: 11, image: "rhystic-study" },
+    { name: "Lightning Bolt", set: "fdc", num: "163", rarity: "uncommon", cost: "R", type: "Instant", printings: 68, image: "lightning-bolt-fdc" },
+    { name: "Lightning Bolt", set: "m11", num: "149", rarity: "common", cost: "R", type: "Instant", printings: 68, image: "lightning-bolt-m11", alt: true },
+    { name: "Ghostfire Slice", set: "mh3", num: "123", rarity: "uncommon", cost: "2R", type: "Instant", printings: 1, image: "ghostfire-slice" },
+    { name: "Jace, the Mind Sculptor", set: "blc", num: "75", rarity: "mythic", cost: "2UU", type: "Legendary Planeswalker — Jace", printings: 10, image: "jace-the-mind-sculptor" },
+    { name: "Doubling Season", set: "fdn", num: "216", rarity: "mythic", cost: "4G", type: "Enchantment", printings: 17, image: "doubling-season" },
+    { name: "Sheoldred, the Apocalypse", set: "dmu", num: "435", rarity: "mythic", cost: "2BB", type: "Legendary Creature — Phyrexian Praetor", printings: 9, image: "sheoldred-the-apocalypse" },
+    { name: "Sol Ring", set: "fdc", num: "286", rarity: "uncommon", cost: "1", type: "Artifact", printings: 140, image: "sol-ring" },
+    { name: "Counterspell", set: "fdc", num: "61", rarity: "uncommon", cost: "UU", type: "Instant", printings: 79, image: "counterspell-fdc" },
+    { name: "Demonic Tutor", set: "cmm", num: "150", rarity: "mythic", cost: "1B", type: "Sorcery", printings: 24, image: "demonic-tutor" },
+    { name: "Swords to Plowshares", set: "fdc", num: "53", rarity: "uncommon", cost: "W", type: "Instant", printings: 93, image: "swords-to-plowshares" },
+    { name: "Llanowar Elves", set: "fdc", num: "213", rarity: "common", cost: "G", type: "Creature — Elf Druid", printings: 64, image: "llanowar-elves" },
+    { name: "Cyclonic Rift", set: "rvr", num: "40", rarity: "mythic", cost: "1U", type: "Instant", printings: 15, image: "cyclonic-rift" },
+    { name: "Swamp", set: "fra", num: "285", rarity: "common", cost: "", type: "Basic Land — Swamp", printings: 841, image: "swamp" },
   ];
 
   const normalize = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
@@ -520,7 +427,7 @@ footer p { max-width: 70em; }
     }
     results.innerHTML = hits.map((c) => `
       <div class="result">
-        <div class="mini" style="background:${c.art}"></div>
+        <img class="mini" src="assets/cards/${c.image}.jpg" width="146" height="204" alt="" loading="lazy">
         <div style="min-width:0">
           <div class="name">${c.name} <span class="cost" aria-label="Mana cost ${c.cost || "none"}">${pips(c.cost)}</span></div>
           <div class="meta"><code>${c.set.toUpperCase()} #${c.num}</code> · ${c.type} · ${c.printings} ${c.printings === 1 ? "printing" : "printings"}</div>
@@ -536,38 +443,6 @@ footer p { max-width: 70em; }
     input.focus();
   }));
   render();
-})();
-</script>
-
-<script>
-// Foil follows the pointer, like light on a foil card; cards tilt a little. Off with reduced motion.
-(function () {
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  document.querySelectorAll(".cards .mtg").forEach((card) => {
-    card.addEventListener("pointermove", (event) => {
-      const r = card.getBoundingClientRect();
-      const x = (event.clientX - r.left) / r.width, y = (event.clientY - r.top) / r.height;
-      card.style.setProperty("--mx", `${x * 100}%`);
-      card.style.setProperty("--my", `${y * 100}%`);
-      card.style.setProperty("--gx", `${x * 100}%`);
-      card.style.setProperty("--gy", `${y * 100}%`);
-      card.style.transform = `perspective(900px) rotateX(${(0.5 - y) * 10}deg) rotateY(${(x - 0.5) * 12}deg) translateY(-4px)`;
-    });
-    card.addEventListener("pointerleave", () => { card.style.transform = ""; });
-  });
-  // The hero's foil card catches the light slowly on its own.
-  const foil = document.querySelector(".fan .foil");
-  if (foil) {
-    let t = 0;
-    const step = () => {
-      t += 0.006;
-      const x = 50 + Math.sin(t) * 45, y = 40 + Math.cos(t * 0.7) * 30;
-      foil.style.setProperty("--gx", `${x}%`); foil.style.setProperty("--gy", `${y}%`);
-      foil.style.setProperty("--mx", `${x}%`); foil.style.setProperty("--my", `${y}%`);
-      requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
 })();
 </script>
 </body>
