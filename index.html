@@ -106,7 +106,7 @@ p { margin: 0; }
 /* The cards may reach past a phone screen's edge; never scroll sideways. */
 main { overflow-x: clip; }
 
-/* The foil nebula: light trails swirling behind the hero, drawn once by script. */
+/* Ember smoke behind the hero, drawn once by script. */
 .nebula { position: absolute; top: 0; left: 0; width: 100%; height: 0; pointer-events: none; z-index: 0; mix-blend-mode: screen; }
 .wrap { position: relative; z-index: 1; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .nebula { mix-blend-mode: multiply; opacity: 0.7; } }
@@ -454,15 +454,14 @@ footer p { max-width: 70em; }
 </script>
 
 <script>
-// The foil nebula: fine trails of the foil's colors flowing around the phone, as if the light
-// off a foil card swirled through the dark. Drawn once (and again when the width changes),
-// with a fixed seed, so it looks the same on every visit.
+// Ember smoke: warm smoke rising around the phone with glowing embers, in the gold of the app
+// icon. Drawn once (and again when the width changes), with a fixed seed, so it looks the same
+// on every visit.
 (function () {
   const canvas = document.querySelector(".nebula");
   const hero = document.querySelector(".hero");
   const anchor = document.querySelector(".hero-visual");
   if (!canvas || !hero || !anchor || !canvas.getContext) return;
-  const colors = [[185, 174, 255], [127, 231, 236], [247, 168, 212], [246, 208, 138], [139, 124, 246]];
   let drawnWidth = 0;
 
   function random(seed) {
@@ -496,49 +495,34 @@ footer p { max-width: 70em; }
     const rand = random(7);
     const gauss = () => (rand() + rand() + rand() - 1.5) / 1.5;
 
-    // Direction of the flow at a point: a vortex around the center, bent by soft waves.
-    const angle = (x, y) => {
-      const dx = x - cx, dy = y - cy;
-      const swirl = Math.atan2(dy, dx) + Math.PI / 2 + 0.35;
-      const wave = Math.sin(x * 0.0045 + Math.sin(y * 0.006) * 1.6) * 0.9 + Math.cos(y * 0.0052 - x * 0.0021) * 0.7;
-      return swirl + wave;
-    };
-
-    // Soft clouds of color first, then the trails on top.
-    for (const [dx, dy, size, [r, g, b], alpha] of [
-      [-0.35, -0.2, 0.9, colors[4], 0.22], [0.45, 0.25, 0.8, colors[2], 0.14], [0.1, 0.55, 0.7, colors[1], 0.1], [-0.6, 0.4, 0.6, colors[3], 0.08],
-    ]) {
-      const x = cx + dx * reach, y = cy + dy * reach, radius = size * reach;
+    // Ember smoke: warm smoke rising past the phone, with glowing embers drifting through it.
+    const gold = [[246, 208, 138], [255, 227, 168], [232, 145, 92], [247, 168, 212], [201, 164, 92]];
+    const rgba = ([r, g, b], a) => `rgba(${r}, ${g}, ${b}, ${a})`;
+    const glow = (x, y, radius, color, alpha) => {
       const cloud = c.createRadialGradient(x, y, 0, x, y, radius);
-      cloud.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha})`);
-      cloud.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
-      c.fillStyle = cloud;
-      c.fillRect(x - radius, y - radius, radius * 2, radius * 2);
-    }
-    c.globalCompositeOperation = "lighter";
-    c.lineCap = "round";
-    const count = Math.round(Math.min(4200, 1800 + width * 1.8));
-    for (let i = 0; i < count; i++) {
-      let x = cx + gauss() * reach * 1.0, y = cy + gauss() * reach * 0.75;
-      const [r, g, b] = colors[Math.floor(rand() * colors.length)];
-      const steps = 60 + Math.floor(rand() * 120);
-      const distance = Math.hypot(x - cx, y - cy) / reach;
-      c.strokeStyle = `rgba(${r}, ${g}, ${b}, ${(0.12 + rand() * 0.22) * Math.max(0.12, 1 - distance * 0.8)})`;
-      c.lineWidth = 0.4 + rand() * 0.8;
-      c.beginPath();
-      c.moveTo(x, y);
-      for (let step = 0; step < steps; step++) {
-        const a = angle(x, y);
-        x += Math.cos(a) * 2.2; y += Math.sin(a) * 2.2;
-        c.lineTo(x, y);
-      }
-      c.stroke();
-    }
-    // A scattering of stars.
+      cloud.addColorStop(0, rgba(color, alpha)); cloud.addColorStop(1, rgba(color, 0));
+      c.fillStyle = cloud; c.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+    };
+    // A warm glow behind the phone.
+    glow(cx - reach * 0.2, cy - reach * 0.1, reach * 1.0, gold[2], 0.14);
+    glow(cx + reach * 0.4, cy + reach * 0.3, reach * 0.8, gold[3], 0.08);
+    // Smoke: many faint, overlapping puffs rising in wavering columns.
     for (let i = 0; i < 260; i++) {
-      const x = rand() * width, y = rand() * height, size = rand() < 0.08 ? 1.4 : 0.7;
-      c.fillStyle = `rgba(243, 240, 255, ${0.15 + rand() * 0.45})`;
-      c.fillRect(x, y, size, size);
+      let x = cx + gauss() * reach * 1.1, y = cy + reach * 0.6 + gauss() * reach * 0.5;
+      const r = 30 + rand() * 90, color = rand() < 0.6 ? [120, 100, 130] : gold[2];
+      for (let k = 0; k < 6; k++) {
+        glow(x, y, r * (1 + k * 0.25), color, 0.018);
+        x += Math.sin(y * 0.01) * 30; y -= r * 0.6;
+      }
+    }
+    // Embers: small hot points with a soft halo, densest around the phone.
+    c.globalCompositeOperation = "lighter";
+    const embers = Math.round(Math.min(380, 140 + width * 0.2));
+    for (let i = 0; i < embers; i++) {
+      const x = cx + gauss() * reach * 1.1, y = cy + gauss() * reach * 0.9, size = 0.6 + rand() * 1.6;
+      glow(x, y, size * 6, gold[2], 0.35);
+      c.fillStyle = rgba(gold[1], 0.9);
+      c.beginPath(); c.arc(x, y, size * 0.6, 0, Math.PI * 2); c.fill();
     }
     // Fade out toward the text, the page's edges and the bottom.
     c.globalCompositeOperation = "destination-in";
