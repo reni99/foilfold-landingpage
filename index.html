@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FoilFold</title>
+<meta name="description" content="FoilFold keeps your Magic: The Gathering collection on iPhone, iPad and Mac: find the exact printing, add it in a tap, and see what your collection is worth. Works offline.">
+<meta name="theme-color" content="#0F0D1A">
+<meta property="og:title" content="FoilFold">
+<meta property="og:description" content="Find the exact printing. Add it in a tap. A Magic: The Gathering collection app for iPhone, iPad and Mac.">
+<meta property="og:image" content="assets/icon-512.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a dark binder-page night sky. Hero text beside a phone, then a live search, then
+   features as a binder spread (3 × 2 pockets), the numbers, and the fine print. Foil only
+   as accents (the icon's glare, the collected coin, one hairline), never a background wash. */
+:root {
+  --ground: #0F0D1A;
+  --surface: #1E1A36;
+  --raised: #2B2650;
+  --ink: #F3F0FF;
+  --muted: #A9A3C7;
+  --hairline: rgba(185, 174, 255, 0.18);
+  --accent: #8B7CF6;
+  --accent-ink: #0F0D1A;
+  --foil: linear-gradient(120deg, #B9AEFF 0%, #7FE7EC 38%, #F7A8D4 68%, #F6D08A 100%);
+  --gold: #F6D08A;
+  --mythic: #F0946A;
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ground: #F6F4FC; --surface: #FFFFFF; --raised: #ECE8FB; --ink: #17142A; --muted: #5B5578;
+    --hairline: rgba(110, 92, 240, 0.18); --accent: #6E5CF0; --accent-ink: #FFFFFF; --gold: #8A6414; --mythic: #B4471A;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --ground: #F6F4FC; --surface: #FFFFFF; --raised: #ECE8FB; --ink: #17142A; --muted: #5B5578;
+  --hairline: rgba(110, 92, 240, 0.18); --accent: #6E5CF0; --accent-ink: #FFFFFF; --gold: #8A6414; --mythic: #B4471A;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font: 16px/1.6 var(--body);
+  padding-inline: 20px;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1120px; margin-inline: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+.label { font: 600 12px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+/* Header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 40px; height: 40px; border-radius: 10px; flex: none; display: block; }
+.brand span { font: 600 22px/1 var(--display); }
+.top nav { display: flex; gap: 22px; flex-wrap: wrap; justify-content: flex-end; }
+.top nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 14px; }
+.top nav a:hover { color: var(--ink); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; align-items: center; padding-block: 40px 72px; }
+.hero h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; }
+.hero h1 em { font-style: italic; font-weight: 500; }
+.hero .lede { margin-top: 22px; font-size: 19px; color: var(--muted); max-width: 34em; }
+.status { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 15px; }
+.platforms { color: var(--muted); font-size: 14px; font-weight: 600; }
+
+/* Screenshots */
+.device { justify-self: center; width: min(320px, 100%); border-radius: 44px; padding: 10px; background: #050409; box-shadow: 0 30px 80px rgba(15, 13, 26, 0.45), inset 0 0 0 1px rgba(185, 174, 255, 0.22); }
+.device img { display: block; width: 100%; height: auto; border-radius: 35px; }
+.shots { display: grid; grid-auto-flow: column; grid-auto-columns: min(250px, 72%); gap: 20px; overflow-x: auto; padding: 4px 4px 18px; scroll-snap-type: x mandatory; }
+.shot { scroll-snap-align: start; display: grid; gap: 12px; margin: 0; }
+.shot .device { width: 100%; padding: 8px; border-radius: 36px; }
+.shot .device img { border-radius: 29px; }
+.shot figcaption { color: var(--muted); font-size: 15px; }
+.shot figcaption b { color: var(--ink); display: block; font-size: 16px; }
+/* Wide enough for all five side by side. */
+@media (min-width: 1000px) {
+  .shots { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; }
+}
+
+/* Sections */
+section { padding-block: 64px; border-top: 1px solid var(--hairline); }
+.section-head { display: grid; gap: 14px; max-width: 40em; margin-bottom: 36px; }
+.section-head h2 { font-size: clamp(30px, 4vw, 44px); line-height: 1.08; }
+.section-head p { color: var(--muted); font-size: 17px; }
+
+/* Live search */
+.demo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.field { display: flex; align-items: center; gap: 12px; height: 58px; padding-inline: 20px; border-radius: 29px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
+.field:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
+.field svg { flex: none; color: var(--muted); }
+.field input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink); font: 500 18px/1 var(--body); outline: none; }
+.field input::placeholder { color: var(--muted); }
+.tries { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tries span { color: var(--muted); font-size: 14px; margin-right: 4px; }
+.tries button { font: 500 14px/1 var(--mono); padding: 9px 13px; border-radius: 999px; border: 0; background: var(--raised); color: var(--ink); cursor: pointer; }
+.tries button:hover { box-shadow: inset 0 0 0 1px var(--accent); }
+.how { margin-top: 18px; color: var(--muted); font-size: 14px; min-height: 1.6em; }
+.results { display: grid; gap: 10px; }
+.result { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 16px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
+.result .mini { width: 46px; aspect-ratio: 63 / 88; border-radius: 5px; }
+.result .name { font-weight: 700; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.result .meta { color: var(--muted); font-size: 13px; }
+.result .meta code { font: 500 12px/1 var(--mono); color: var(--ink); }
+.cost { display: inline-flex; gap: 2px; }
+.pip { width: 15px; height: 15px; border-radius: 50%; display: inline-grid; place-items: center; font: 700 9px/1 var(--body); color: #17142A; box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25); }
+.pip.W { background: #F8F3D6; } .pip.U { background: #A8D2EE; } .pip.B { background: #B7AEAE; } .pip.R { background: #EFA88B; } .pip.G { background: #9FCDA9; } .pip.N { background: #CFCAD8; }
+.rarity { font: 700 11px/1 var(--body); letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 8px; border-radius: 6px; background: var(--raised); color: var(--muted); }
+.rarity.mythic { color: var(--mythic); } .rarity.rare { color: var(--gold); }
+.empty { padding: 18px; border-radius: 16px; border: 1px dashed var(--hairline); color: var(--muted); }
+
+/* Binder spread */
+.binder { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 14px; border-radius: 24px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
+.pocket { position: relative; padding: 22px 20px 20px; border-radius: 14px; background: var(--ground); box-shadow: inset 0 0 0 1px var(--hairline); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.pocket::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; border-radius: 14px 14px 0 0; background: var(--hairline); }
+.pocket.foil::before { background: var(--foil); }
+.pocket .glyph { width: 34px; height: 34px; color: var(--accent); }
+.pocket h3 { font-size: 21px; line-height: 1.2; }
+.pocket p { color: var(--muted); font-size: 15px; }
+.pocket .tag { font: 500 12px/1.4 var(--mono); color: var(--ink); opacity: 0.8; }
+
+/* Numbers */
+.numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.number { padding-block: 8px; display: grid; gap: 6px; }
+.number b { font: 600 clamp(36px, 5vw, 56px)/1 var(--display); font-variant-numeric: tabular-nums; }
+.number span { color: var(--muted); }
+.numbers-note { margin-top: 22px; color: var(--muted); max-width: 46em; }
+
+/* Footer */
+footer { border-top: 1px solid var(--hairline); padding-block: 36px 48px; display: grid; gap: 14px; color: var(--muted); font-size: 13px; }
+footer .brand span { font-size: 18px; color: var(--ink); }
+footer p { max-width: 70em; }
+
+@media (max-width: 860px) {
+  .hero, .demo { grid-template-columns: minmax(0, 1fr); }
+  .hero { padding-block: 16px 56px; gap: 40px; }
+  .binder { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  body { padding-inline: 16px; }
+  .top nav { display: none; }
+  .binder, .numbers { grid-template-columns: minmax(0, 1fr); }
+  section { padding-block: 48px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top" aria-label="FoilFold">
+      <img src="assets/icon-64.png" alt="" width="40" height="40">
+      <span>FoilFold</span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#screens">The App</a>
+      <a href="#search">Search</a>
+      <a href="#features">Features</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div>
+        <p class="label">Magic: The Gathering collection app</p>
+        <h1 style="margin-top: 18px">Find the exact printing. <em>Add it in a tap.</em></h1>
+        <p class="lede">FoilFold keeps your Magic collection on iPhone, iPad and Mac. It finds any card and every version of it in a moment, even offline, and shows what your collection is worth.</p>
+        <div class="status">
+          <span class="pill">Coming soon to the App Store</span>
+          <span class="platforms">iPhone · iPad · Mac</span>
+        </div>
+      </div>
+
+      <div class="device">
+        <img src="assets/screens/collection.jpg" width="660" height="1434" alt="FoilFold on iPhone: the collection with its card count and estimated value, recently added cards such as Atraxa, Grand Unifier and Counterspell, and their prices.">
+      </div>
+    </div>
+
+    <section id="screens" aria-labelledby="screens-title">
+      <div class="section-head">
+        <p class="label">The app</p>
+        <h2 id="screens-title">A closer look</h2>
+      </div>
+      <div class="shots">
+        <figure class="shot">
+          <div class="device"><img src="assets/screens/collection.jpg" width="660" height="1434" loading="lazy" alt="The collection, most valuable cards first, with the total value."></div>
+          <figcaption><b>Your collection</b>Every copy with its value, and the total.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device"><img src="assets/screens/search.jpg" width="660" height="1434" loading="lazy" alt="Search results for “shivan”: Shivan Reef, Shivan Gorge, Shivan Devastator and Shivan Dragon with prices."></div>
+          <figcaption><b>Search the whole catalog</b>On the device, typos and all.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device"><img src="assets/screens/card.jpg" width="660" height="1434" loading="lazy" alt="Shivan Dragon's card screen: its art, rules text, price and the controls to add copies."></div>
+          <figcaption><b>Every card</b>Its text, price and your copies.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device"><img src="assets/screens/printings.jpg" width="660" height="1434" loading="lazy" alt="Shivan Dragon's 49 other printings, each with its set, rarity and price."></div>
+          <figcaption><b>Every printing</b>Pick the exact version you own.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device"><img src="assets/screens/binder.jpg" width="660" height="1434" loading="lazy" alt="A Bloomburrow binder page with nine pockets; numbers show the copies already owned."></div>
+          <figcaption><b>Binder by binder</b>Go through a set a page at a time.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="search" aria-labelledby="search-title">
+      <div class="section-head">
+        <p class="label">Search</p>
+        <h2 id="search-title">Type it the way you'd say it</h2>
+        <p>Misspell it, abbreviate it, or read the set code and number off the bottom of the card. Try it with a few cards from the catalog.</p>
+      </div>
+      <div class="demo">
+        <div>
+          <label class="field" for="q">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+            <input id="q" type="search" value="rhistic stud" autocomplete="off" spellcheck="false" aria-describedby="how" placeholder="Card name, or set and number">
+          </label>
+          <div class="tries">
+            <span>Try</span>
+            <button type="button" data-q="ligtning bolt">ligtning bolt</button>
+            <button type="button" data-q="mh3 123">mh3 123</button>
+            <button type="button" data-q="jace sculptor">jace sculptor</button>
+            <button type="button" data-q="fdn 216">fdn 216</button>
+            <button type="button" data-q="sheoldred">sheoldred</button>
+          </div>
+          <p class="how" id="how" aria-live="polite"></p>
+        </div>
+        <div class="results" id="results" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="features" aria-labelledby="features-title">
+      <div class="section-head">
+        <p class="label">What it does</p>
+        <h2 id="features-title">Built the way collectors sort their binders</h2>
+      </div>
+      <div class="binder">
+        <article class="pocket foil">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 7h6M9 17h3"/></svg>
+          <h3>The right version, not just the card</h3>
+          <p>Every set, showcase and borderless frame, and every promo. Record the finish, condition and language of each copy.</p>
+          <span class="tag">Swamp · 841 printings</span>
+        </article>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M3 12h18"/></svg>
+          <h3>A binder page at a time</h3>
+          <p>Pick a set and go through it page by page in binder order. Tap the pockets you own; each shows how many copies you already have.</p>
+          <span class="tag">Bloomburrow · page 1 of 31</span>
+        </article>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19l5-6 4 3 7-9"/><path d="M15 7h5v5"/></svg>
+          <h3>Know what it's worth</h3>
+          <p>An estimated value for every copy and for the whole collection, from Cardmarket and TCGplayer prices via Scryfall. Sort by total value or price per card.</p>
+          <span class="tag">near mint · English · ECB rates</span>
+        </article>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          <h3>Sort and filter like a collector</h3>
+          <p>Color, mana value, card type, rarity and set, combined however you like. Sort in up to three levels, with your own cards first or the gaps first.</p>
+          <span class="tag">Red · MV 2 · Creature · Mythic</span>
+        </article>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 4.2-2.6M12 20h.01"/><path d="M14.8 10.3A10 10 0 0 1 19 12.9"/></svg>
+          <h3>Works offline</h3>
+          <p>The whole catalog lives on your device, so search never waits for the network. New sets arrive in the background.</p>
+          <span class="tag">at a card show, in the basement</span>
+        </article>
+        <article class="pocket">
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8z"/></svg>
+          <h3>Yours, in your iCloud</h3>
+          <p>No account to create. Your collection syncs through your own iCloud between iPhone, iPad and Mac. Import and export it as CSV whenever you like.</p>
+          <span class="tag">no sign-up · CSV in and out</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="catalog" aria-labelledby="catalog-title">
+      <div class="section-head">
+        <p class="label">The catalog</p>
+        <h2 id="catalog-title">Every Magic card, on your device</h2>
+      </div>
+      <div class="numbers">
+        <div class="number"><b>34,528</b><span>cards</span></div>
+        <div class="number"><b>103,608</b><span>printings</span></div>
+        <div class="number"><b>745</b><span>sets</span></div>
+      </div>
+      <p class="numbers-note">Counted in the current catalog. Searching it never leaves your device, and when a new set is released the catalog updates in the background.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="#top"><img src="assets/icon-64.png" alt="" width="40" height="40"><span>FoilFold</span></a>
+    <p>Card data and images are provided by Scryfall. Prices are estimates from Cardmarket and TCGplayer (via Scryfall), converted at ECB rates.</p>
+    <p>Magic: The Gathering is © Wizards of the Coast. FoilFold is not produced or endorsed by Wizards of the Coast or Scryfall.</p>
+    <p><a href="privacy.html">Privacy Policy</a></p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // A few real cards from the catalog: name, default set and number, rarity, cost, type,
+  // number of printings. Extra entries are other printings that set + number finds.
+  const cards = [
+    { name: "Rhystic Study", set: "j22", num: "114", rarity: "rare", cost: "2U", type: "Enchantment", printings: 11, art: "linear-gradient(170deg,#2C3F66,#6B87B8)" },
+    { name: "Lightning Bolt", set: "fdc", num: "163", rarity: "uncommon", cost: "R", type: "Instant", printings: 68, art: "linear-gradient(150deg,#5E2A2A,#B4573A)" },
+    { name: "Lightning Bolt", set: "m11", num: "149", rarity: "common", cost: "R", type: "Instant", printings: 68, art: "linear-gradient(150deg,#5E2A2A,#B4573A)", alt: true },
+    { name: "Ghostfire Slice", set: "mh3", num: "123", rarity: "uncommon", cost: "2R", type: "Instant", printings: 1, art: "linear-gradient(140deg,#4B1F2E,#C2603E)" },
+    { name: "Jace, the Mind Sculptor", set: "blc", num: "75", rarity: "mythic", cost: "2UU", type: "Legendary Planeswalker — Jace", printings: 10, art: "linear-gradient(165deg,#22305E,#5B78C7)" },
+    { name: "Doubling Season", set: "fdn", num: "216", rarity: "mythic", cost: "4G", type: "Enchantment", printings: 17, art: "linear-gradient(160deg,#6B5A2E,#3C5A3A)" },
+    { name: "Sheoldred, the Apocalypse", set: "dmu", num: "435", rarity: "mythic", cost: "2BB", type: "Legendary Creature — Phyrexian Praetor", printings: 9, art: "linear-gradient(160deg,#1E1A26,#5A4A62)" },
+    { name: "Sol Ring", set: "fdc", num: "286", rarity: "uncommon", cost: "1", type: "Artifact", printings: 140, art: "linear-gradient(150deg,#4A4252,#9A8E7A)" },
+    { name: "Counterspell", set: "fdc", num: "61", rarity: "uncommon", cost: "UU", type: "Instant", printings: 79, art: "linear-gradient(160deg,#1E3050,#4E79A8)" },
+    { name: "Demonic Tutor", set: "cmm", num: "150", rarity: "mythic", cost: "1B", type: "Sorcery", printings: 24, art: "linear-gradient(160deg,#2A1420,#6E3048)" },
+    { name: "Swords to Plowshares", set: "fdc", num: "53", rarity: "uncommon", cost: "W", type: "Instant", printings: 93, art: "linear-gradient(160deg,#6E6A52,#C9C08E)" },
+    { name: "Llanowar Elves", set: "fdc", num: "213", rarity: "common", cost: "G", type: "Creature — Elf Druid", printings: 64, art: "linear-gradient(160deg,#1F3A24,#5E8C4E)" },
+    { name: "Cyclonic Rift", set: "rvr", num: "40", rarity: "mythic", cost: "1U", type: "Instant", printings: 15, art: "linear-gradient(160deg,#1A2B4A,#4A6FA8)" },
+    { name: "Swamp", set: "fra", num: "285", rarity: "common", cost: "", type: "Basic Land — Swamp", printings: 841, art: "linear-gradient(160deg,#1C1828,#4B4058)" },
+  ];
+
+  const normalize = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+
+  function distance(a, b) {
+    const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+    for (let i = 1; i <= a.length; i++) {
+      let prev = row[0];
+      row[0] = i;
+      for (let j = 1; j <= b.length; j++) {
+        const cur = row[j];
+        row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+        prev = cur;
+      }
+    }
+    return row[b.length];
+  }
+
+  // Each query word against the closest word of the name, as a prefix: few typos per word.
+  function score(query, name) {
+    const words = normalize(name).split(" ");
+    let total = 0;
+    for (const q of query.split(" ")) {
+      let best = Infinity;
+      for (const w of words) best = Math.min(best, distance(q, w.slice(0, q.length)));
+      if (best > Math.max(1, Math.floor(q.length / 4))) return Infinity;
+      total += best;
+    }
+    return total;
+  }
+
+  function search(raw) {
+    const query = normalize(raw);
+    if (!query) return { how: "", hits: [] };
+    const set = query.match(/^([a-z0-9]{3,5}) ([0-9]+[a-z]?)$/);
+    if (set) {
+      const hits = cards.filter((c) => c.set === set[1] && c.num === set[2]);
+      return { how: hits.length ? `Read as set ${set[1].toUpperCase()}, number ${set[2]}: that exact printing.` : `Set ${set[1].toUpperCase()}, number ${set[2]}: not among this page's sample cards.`, hits };
+    }
+    const seen = new Set();
+    const hits = cards
+      .filter((c) => !c.alt)
+      .map((c) => ({ c, s: score(query, c.name) }))
+      .filter((x) => x.s !== Infinity)
+      .sort((a, b) => a.s - b.s)
+      .map((x) => x.c)
+      .filter((c) => !seen.has(c.name) && seen.add(c.name))
+      .slice(0, 3);
+    const typo = hits.length && score(query, hits[0].name) > 0;
+    return { how: hits.length ? (typo ? "Close enough: typos are forgiven." : "Matched by name, word by word.") : "", hits };
+  }
+
+  const pips = (cost) => [...cost.matchAll(/(\d+|[WUBRG])/g)].map((m) => {
+    const sym = m[0];
+    const cls = /\d/.test(sym) ? "N" : sym;
+    return `<span class="pip ${cls}" aria-hidden="true">${sym}</span>`;
+  }).join("");
+
+  const results = document.getElementById("results");
+  const how = document.getElementById("how");
+  const input = document.getElementById("q");
+
+  function render() {
+    const { how: text, hits } = search(input.value);
+    how.textContent = text;
+    if (!hits.length) {
+      results.innerHTML = input.value.trim()
+        ? `<div class="empty">No match among the sample cards on this page. The app searches all 34,528.</div>`
+        : `<div class="empty">Type a card name, or a set code and number like <code>mh3 123</code>.</div>`;
+      return;
+    }
+    results.innerHTML = hits.map((c) => `
+      <div class="result">
+        <div class="mini" style="background:${c.art}"></div>
+        <div style="min-width:0">
+          <div class="name">${c.name} <span class="cost" aria-label="Mana cost ${c.cost || "none"}">${pips(c.cost)}</span></div>
+          <div class="meta"><code>${c.set.toUpperCase()} #${c.num}</code> · ${c.type} · ${c.printings} ${c.printings === 1 ? "printing" : "printings"}</div>
+        </div>
+        <span class="rarity ${c.rarity}">${c.rarity}</span>
+      </div>`).join("");
+  }
+
+  input.addEventListener("input", render);
+  document.querySelectorAll(".tries button").forEach((b) => b.addEventListener("click", () => {
+    input.value = b.dataset.q;
+    render();
+    input.focus();
+  }));
+  render();
+})();
+</script>
+</body>
+</html>

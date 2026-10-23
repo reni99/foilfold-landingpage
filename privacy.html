@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FoilFold Privacy Policy</title>
+<meta name="description" content="FoilFold has no accounts, no ads and no tracking. What the app stores and which servers it talks to.">
+<meta name="theme-color" content="#0F0D1A">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a dark binder-page night sky. Hero text beside a phone, then a live search, then
+   features as a binder spread (3 × 2 pockets), the numbers, and the fine print. Foil only
+   as accents (the icon's glare, the collected coin, one hairline), never a background wash. */
+:root {
+  --ground: #0F0D1A;
+  --surface: #1E1A36;
+  --raised: #2B2650;
+  --ink: #F3F0FF;
+  --muted: #A9A3C7;
+  --hairline: rgba(185, 174, 255, 0.18);
+  --accent: #8B7CF6;
+  --accent-ink: #0F0D1A;
+  --foil: linear-gradient(120deg, #B9AEFF 0%, #7FE7EC 38%, #F7A8D4 68%, #F6D08A 100%);
+  --gold: #F6D08A;
+  --mythic: #F0946A;
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ground: #F6F4FC; --surface: #FFFFFF; --raised: #ECE8FB; --ink: #17142A; --muted: #5B5578;
+    --hairline: rgba(110, 92, 240, 0.18); --accent: #6E5CF0; --accent-ink: #FFFFFF; --gold: #8A6414; --mythic: #B4471A;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --ground: #F6F4FC; --surface: #FFFFFF; --raised: #ECE8FB; --ink: #17142A; --muted: #5B5578;
+  --hairline: rgba(110, 92, 240, 0.18); --accent: #6E5CF0; --accent-ink: #FFFFFF; --gold: #8A6414; --mythic: #B4471A;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font: 16px/1.6 var(--body);
+  padding-inline: 20px;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1120px; margin-inline: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+.label { font: 600 12px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+/* Header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 40px; height: 40px; border-radius: 10px; flex: none; display: block; }
+.brand span { font: 600 22px/1 var(--display); }
+.top nav { display: flex; gap: 22px; flex-wrap: wrap; justify-content: flex-end; }
+.top nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 14px; }
+.top nav a:hover { color: var(--ink); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; align-items: center; padding-block: 40px 72px; }
+.hero h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; }
+.hero h1 em { font-style: italic; font-weight: 500; }
+.hero .lede { margin-top: 22px; font-size: 19px; color: var(--muted); max-width: 34em; }
+.status { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 15px; }
+.platforms { color: var(--muted); font-size: 14px; font-weight: 600; }
+
+/* Screenshots */
+.device { justify-self: center; width: min(320px, 100%); border-radius: 44px; padding: 10px; background: #050409; box-shadow: 0 30px 80px rgba(15, 13, 26, 0.45), inset 0 0 0 1px rgba(185, 174, 255, 0.22); }
+.device img { display: block; width: 100%; height: auto; border-radius: 35px; }
+.shots { display: grid; grid-auto-flow: column; grid-auto-columns: min(250px, 72%); gap: 20px; overflow-x: auto; padding: 4px 4px 18px; scroll-snap-type: x mandatory; }
+.shot { scroll-snap-align: start; display: grid; gap: 12px; margin: 0; }
+.shot .device { width: 100%; padding: 8px; border-radius: 36px; }
+.shot .device img { border-radius: 29px; }
+.shot figcaption { color: var(--muted); font-size: 15px; }
+.shot figcaption b { color: var(--ink); display: block; font-size: 16px; }
+
+/* Sections */
+section { padding-block: 64px; border-top: 1px solid var(--hairline); }
+.section-head { display: grid; gap: 14px; max-width: 40em; margin-bottom: 36px; }
+.section-head h2 { font-size: clamp(30px, 4vw, 44px); line-height: 1.08; }
+.section-head p { color: var(--muted); font-size: 17px; }
+
+/* Live search */
+.demo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.field { display: flex; align-items: center; gap: 12px; height: 58px; padding-inline: 20px; border-radius: 29px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
+.field:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
+.field svg { flex: none; color: var(--muted); }
+.field input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink); font: 500 18px/1 var(--body); outline: none; }
+.field input::placeholder { color: var(--muted); }
+.tries { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tries span { color: var(--muted); font-size: 14px; margin-right: 4px; }
+.tries button { font: 500 14px/1 var(--mono); padding: 9px 13px; border-radius: 999px; border: 0; background: var(--raised); color: var(--ink); cursor: pointer; }
+.tries button:hover { box-shadow: inset 0 0 0 1px var(--accent); }
+.how { margin-top: 18px; color: var(--muted); font-size: 14px; min-height: 1.6em; }
+.results { display: grid; gap: 10px; }
+.result { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 16px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
+.result .mini { width: 46px; aspect-ratio: 63 / 88; border-radius: 5px; }
+.result .name { font-weight: 700; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.result .meta { color: var(--muted); font-size: 13px; }
+.result .meta code { font: 500 12px/1 var(--mono); color: var(--ink); }
+.cost { display: inline-flex; gap: 2px; }
+.pip { width: 15px; height: 15px; border-radius: 50%; display: inline-grid; place-items: center; font: 700 9px/1 var(--body); color: #17142A; box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25); }
+.pip.W { background: #F8F3D6; } .pip.U { background: #A8D2EE; } .pip.B { background: #B7AEAE; } .pip.R { background: #EFA88B; } .pip.G { background: #9FCDA9; } .pip.N { background: #CFCAD8; }
+.rarity { font: 700 11px/1 var(--body); letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 8px; border-radius: 6px; background: var(--raised); color: var(--muted); }
+.rarity.mythic { color: var(--mythic); } .rarity.rare { color: var(--gold); }
+.empty { padding: 18px; border-radius: 16px; border: 1px dashed var(--hairline); color: var(--muted); }
+
+/* Binder spread */
+.binder { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 14px; border-radius: 24px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline); }
+.pocket { position: relative; padding: 22px 20px 20px; border-radius: 14px; background: var(--ground); box-shadow: inset 0 0 0 1px var(--hairline); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.pocket::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; border-radius: 14px 14px 0 0; background: var(--hairline); }
+.pocket.foil::before { background: var(--foil); }
+.pocket .glyph { width: 34px; height: 34px; color: var(--accent); }
+.pocket h3 { font-size: 21px; line-height: 1.2; }
+.pocket p { color: var(--muted); font-size: 15px; }
+.pocket .tag { font: 500 12px/1.4 var(--mono); color: var(--ink); opacity: 0.8; }
+
+/* Numbers */
+.numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.number { padding-block: 8px; display: grid; gap: 6px; }
+.number b { font: 600 clamp(36px, 5vw, 56px)/1 var(--display); font-variant-numeric: tabular-nums; }
+.number span { color: var(--muted); }
+.numbers-note { margin-top: 22px; color: var(--muted); max-width: 46em; }
+
+/* Footer */
+footer { border-top: 1px solid var(--hairline); padding-block: 36px 48px; display: grid; gap: 14px; color: var(--muted); font-size: 13px; }
+footer .brand span { font-size: 18px; color: var(--ink); }
+footer p { max-width: 70em; }
+
+@media (max-width: 860px) {
+  .hero, .demo { grid-template-columns: minmax(0, 1fr); }
+  .hero { padding-block: 16px 56px; gap: 40px; }
+  .binder { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  body { padding-inline: 16px; }
+  .top nav { display: none; }
+  .binder, .numbers { grid-template-columns: minmax(0, 1fr); }
+  section { padding-block: 48px; }
+}
+
+</style>
+<style>
+.policy { max-width: 46em; padding-block: 24px 64px; display: grid; gap: 28px; }
+.policy h1 { font-size: clamp(34px, 5vw, 50px); line-height: 1.05; }
+.policy h2 { font-size: 24px; }
+.policy section { border: 0; padding: 0; display: grid; gap: 10px; }
+.policy p, .policy li { color: var(--muted); }
+.policy strong { color: var(--ink); }
+.policy ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.policy .updated { font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./" aria-label="FoilFold home">
+      <img src="assets/icon-64.png" alt="" width="40" height="40">
+      <span>FoilFold</span>
+    </a>
+  </header>
+
+  <main class="policy">
+    <div>
+      <p class="label">Privacy Policy</p>
+      <h1 style="margin-top: 14px">Your collection is yours</h1>
+      <p class="updated" style="margin-top: 14px">Last updated 23 October 2026</p>
+    </div>
+
+    <section>
+      <h2>In short</h2>
+      <p>FoilFold has <strong>no accounts, no ads, no analytics and no tracking</strong>. It does not collect personal data, and the developer cannot see your collection.</p>
+    </section>
+
+    <section>
+      <h2>What stays on your devices</h2>
+      <ul>
+        <li><strong>Your collection</strong> (which cards you own, how many, and their condition, language and finish) is stored on your device.</li>
+        <li>If iCloud is turned on, the collection also syncs through <strong>your own private iCloud database</strong> (Apple's CloudKit), so it appears on your iPhone, iPad and Mac. Only your Apple Account can read it; Apple's <a href="https://www.apple.com/legal/privacy/">privacy policy</a> applies.</li>
+        <li><strong>Settings</strong> (currency, default condition, language and finish, sorting and filters) and recent searches stay on the device.</li>
+        <li>CSV files you import or export go only where you choose to save or share them.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What the app downloads</h2>
+      <ul>
+        <li><strong>Card catalog and price updates</strong> come from FoilFold's server. These requests contain no information about you or your collection. Like any web server, it receives your device's IP address with each request; it is not used to identify you.</li>
+        <li><strong>Card images</strong> are loaded from Scryfall's image server, which receives the same kind of request information. See <a href="https://scryfall.com/docs/privacy">Scryfall's privacy policy</a>.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Changes</h2>
+      <p>If this policy changes, the new version will be published on this page with a new date.</p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>Questions about privacy: <a href="https://github.com/reni99/foilfold-landingpage/issues">open an issue on GitHub</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="./"><img src="assets/icon-64.png" alt="" width="40" height="40"><span>FoilFold</span></a>
+    <p>Magic: The Gathering is © Wizards of the Coast. FoilFold is not produced or endorsed by Wizards of the Coast or Scryfall.</p>
+  </footer>
+</div>
+</body>
+</html>
