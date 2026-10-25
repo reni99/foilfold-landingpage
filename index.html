@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FoilFold</title>
 <meta name="description" content="FoilFold keeps your Magic: The Gathering collection on iPhone, iPad and Mac: find the exact printing, add it in a tap, and see what your collection is worth. Works offline.">
-<meta name="theme-color" content="#0F0D1A">
+<meta name="theme-color" content="#11161C">
 <meta property="og:title" content="FoilFold">
 <meta property="og:description" content="Find the exact printing. Add it in a tap. A Magic: The Gathering collection app for iPhone, iPad and Mac.">
 <meta property="og:image" content="assets/icon-512.png">
@@ -15,18 +15,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: a dark binder-page night sky. Hero text beside a phone, then a live search, then
-   features as a binder spread (3 × 2 pockets), the numbers, and the fine print. Foil only
-   as accents (the icon's glare, the collected coin, one hairline), never a background wash. */
+/* Layout: the app's "Wash + Sleeve" look: slate like card sleeves and deck boxes, one cyan
+   accent, the five Magic colors only as soft washes. Hero text beside a phone, then a live
+   search, then features as a binder spread (3 × 2 pockets), the numbers, and the fine print.
+   Foil only where something is foil. */
 :root {
-  --ground: #0F0D1A;
-  --surface: #1E1A36;
-  --raised: #2B2650;
-  --ink: #F3F0FF;
-  --muted: #A9A3C7;
-  --hairline: rgba(185, 174, 255, 0.18);
-  --accent: #8B7CF6;
-  --accent-ink: #0F0D1A;
+  --ground: #11161C;
+  --surface: #1B232C;
+  --raised: #26323F;
+  --ink: #EEF2F5;
+  --muted: #9AA7B2;
+  --hairline: rgba(154, 167, 178, 0.18);
+  --accent: #5FD3E6;
+  --accent-ink: #0A1E23;
   --foil: linear-gradient(120deg, #B9AEFF 0%, #7FE7EC 38%, #F7A8D4 68%, #F6D08A 100%);
   --gold: #F6D08A;
   --mythic: #F0946A;
@@ -37,14 +38,14 @@
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --ground: #F6F4FC; --surface: #FFFFFF; --raised: #ECE8FB; --ink: #17142A; --muted: #5B5578;
-    --hairline: rgba(110, 92, 240, 0.18); --accent: #6E5CF0; --accent-ink: #FFFFFF; --gold: #8A6414; --mythic: #B4471A;
+    --ground: #EEF2F5; --surface: #FFFFFF; --raised: #E1E8ED; --ink: #11161C; --muted: #56636F;
+    --hairline: rgba(17, 22, 28, 0.12); --accent: #0B7A8C; --accent-ink: #FFFFFF; --gold: #8A6414; --mythic: #B4471A;
     color-scheme: light;
   }
 }
 :root[data-theme="light"] {
-  --ground: #F6F4FC; --surface: #FFFFFF; --raised: #ECE8FB; --ink: #17142A; --muted: #5B5578;
-  --hairline: rgba(110, 92, 240, 0.18); --accent: #6E5CF0; --accent-ink: #FFFFFF; --gold: #8A6414; --mythic: #B4471A;
+  --ground: #EEF2F5; --surface: #FFFFFF; --raised: #E1E8ED; --ink: #11161C; --muted: #56636F;
+  --hairline: rgba(17, 22, 28, 0.12); --accent: #0B7A8C; --accent-ink: #FFFFFF; --gold: #8A6414; --mythic: #B4471A;
   color-scheme: light;
 }
 
@@ -82,7 +83,7 @@ p { margin: 0; }
 .platforms { color: var(--muted); font-size: 14px; font-weight: 600; }
 
 /* Screenshots */
-.device { justify-self: center; width: min(320px, 100%); border-radius: 44px; padding: 10px; background: #050409; box-shadow: 0 30px 80px rgba(15, 13, 26, 0.45), inset 0 0 0 1px rgba(185, 174, 255, 0.22); }
+.device { justify-self: center; width: min(320px, 100%); border-radius: 44px; padding: 10px; background: #06090C; box-shadow: 0 30px 80px rgba(15, 13, 26, 0.45), inset 0 0 0 1px rgba(185, 174, 255, 0.22); }
 .device img { display: block; width: 100%; height: auto; border-radius: 35px; }
 .shots { display: grid; grid-auto-flow: column; grid-auto-columns: min(250px, 72%); gap: 20px; overflow-x: auto; padding: 4px 4px 18px; scroll-snap-type: x mandatory; }
 .shot { scroll-snap-align: start; display: grid; gap: 12px; margin: 0; }
@@ -138,7 +139,7 @@ section { padding-block: 64px; border-top: 1px solid var(--hairline); }
 .result .meta { color: var(--muted); font-size: 13px; }
 .result .meta code { font: 500 12px/1 var(--mono); color: var(--ink); }
 .cost { display: inline-flex; gap: 2px; }
-.pip { width: 15px; height: 15px; border-radius: 50%; display: inline-grid; place-items: center; font: 700 9px/1 var(--body); color: #17142A; box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25); }
+.pip { width: 15px; height: 15px; border-radius: 50%; display: inline-grid; place-items: center; font: 700 9px/1 var(--body); color: #11161C; box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25); }
 .pip.W { background: #F8F3D6; } .pip.U { background: #A8D2EE; } .pip.B { background: #B7AEAE; } .pip.R { background: #EFA88B; } .pip.G { background: #9FCDA9; } .pip.N { background: #CFCAD8; }
 .rarity { font: 700 11px/1 var(--body); letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 8px; border-radius: 6px; background: var(--raised); color: var(--muted); }
 .rarity.mythic { color: var(--mythic); } .rarity.rare { color: var(--gold); }
@@ -497,8 +498,9 @@ footer p { max-width: 70em; }
     const rand = random(7);
     const gauss = () => (rand() + rand() + rand() - 1.5) / 1.5;
 
-    // Ember smoke: warm smoke rising past the phone, with glowing embers drifting through it.
-    const gold = [[246, 208, 138], [255, 227, 168], [232, 145, 92], [247, 168, 212], [201, 164, 92]];
+    // Ember smoke: smoke rising past the phone in the app's color washes (blue, red, green,
+    // gold), with glowing embers drifting through it.
+    const gold = [[217, 180, 90], [243, 233, 198], [224, 88, 58], [74, 144, 217], [63, 162, 102]];
     const rgba = ([r, g, b], a) => `rgba(${r}, ${g}, ${b}, ${a})`;
     const glow = (x, y, radius, color, alpha) => {
       const cloud = c.createRadialGradient(x, y, 0, x, y, radius);
@@ -511,7 +513,7 @@ footer p { max-width: 70em; }
     // Smoke: many faint, overlapping puffs rising in wavering columns.
     for (let i = 0; i < 260; i++) {
       let x = cx + gauss() * reach * 1.1, y = cy + reach * 0.6 + gauss() * reach * 0.5;
-      const r = 30 + rand() * 90, color = rand() < 0.6 ? [120, 100, 130] : gold[2];
+      const r = 30 + rand() * 90, color = rand() < 0.6 ? [90, 110, 128] : gold[2 + Math.floor(rand() * 3)];
       for (let k = 0; k < 6; k++) {
         glow(x, y, r * (1 + k * 0.25), color, 0.018);
         x += Math.sin(y * 0.01) * 30; y -= r * 0.6;
